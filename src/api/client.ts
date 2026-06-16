@@ -23,7 +23,12 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      useAuthStore.getState().logout()
+      const token = useAuthStore.getState().token
+      if (token) {
+        // Chỉ logout khi đang đăng nhập mà token hết hạn
+        useAuthStore.getState().logout()
+      }
+      // Nếu chưa có token (đang login fail) → bỏ qua, để loginApi tự handle lỗi
     }
     return Promise.reject(error)
   },
