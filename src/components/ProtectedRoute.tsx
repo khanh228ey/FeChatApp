@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import { Navigate } from 'react-router-dom'
-import { useAuthStore } from '../stores/authStore'
+import { useAuthStore } from '../stores/auth.store'
 
 // Chặn route khi chưa đăng nhập → redirect về /login
 export function ProtectedRoute({ children }: { children: ReactNode }) {

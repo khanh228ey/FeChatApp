@@ -1,4 +1,3 @@
-// Types khớp với response từ Go API
 export interface User {
   id: string
   email?: string
@@ -7,6 +6,12 @@ export interface User {
 
 export interface LoginRequest {
   identifier: string
+  password: string
+}
+
+export interface RegisterRequest {
+  email?: string
+  phone?: string
   password: string
 }
 

@@ -1,0 +1,13 @@
+:root {
+  --primary-gradient: linear-gradient(135deg, #56ab2f, #a8e063);
+  --primary-color: #56ab2f;
+  --text-dark: #2d4a1e;
+  --text-green-dark: #2d5a1b;
+  --text-green-light: #6a9c4f;
+  --text-green-muted: #8ab87a;
+  --error-color: #c0392b;
+  --error-bg: rgba(192, 57, 43, 0.08);
+  --border-light: rgba(86, 171, 47, 0.3);
+  
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { User } from '../types/auth'
-import { logoutApi } from '../api/auth'
+import type { User } from '../features/auth/types/auth.types'
+import { logoutApi } from '../api/endpoints/auth.api'
 
 interface AuthState {
   token: string | null

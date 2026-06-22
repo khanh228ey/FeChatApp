@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useAuthStore } from '../stores/authStore'
+import { useAuthStore } from '../stores/auth.store'
 
 // Axios instance dùng chung — tự gắn token vào mọi request
 export const api = axios.create({

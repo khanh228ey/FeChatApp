@@ -1,25 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
-import { loginApi } from '../../api/auth'
-import { useAuthStore } from '../../stores/authStore'
-import type { ApiError } from '../../types/auth'
-import { isAxiosError } from 'axios'
 
-export default function LoginPage() {
+export default function MeadowBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null)
-    const navigate = useNavigate()
-    const login = useAuthStore((s) => s.login)
-    const [identifier, setIdentifier] = useState('')
-    const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState('')
 
     useEffect(() => {
-        document.body.style.margin = '0'
-        document.body.style.overflow = 'hidden'
-        document.documentElement.style.overflow = 'hidden'
-
         const canvas = canvasRef.current
         if (!canvas) return
 
@@ -262,140 +247,21 @@ export default function LoginPage() {
             cancelAnimationFrame(animId)
             renderer.dispose()
             window.removeEventListener('resize', onResize)
-            document.body.style.overflow = ''
-            document.body.style.margin = ''
-            document.documentElement.style.overflow = ''
         }
     }, [])
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault()
-        setLoading(true)
-        setError('')
-
-        try {
-            const result = await loginApi({ identifier, password })
-            login(result.token, result.user)
-            navigate('/hello')
-        } catch (err) {
-            if (isAxiosError<ApiError>(err)) {
-                setError(err.response?.data?.error ?? 'Đăng nhập thất bại')
-            } else {
-                setError('Không thể kết nối server')
-            }
-        } finally {
-            setLoading(false)
-        }
-    }
-
     return (
-        <div style={{ position: 'relative', width: '100vw', height: '100vh', overflow: 'hidden' }}>
-            <canvas ref={canvasRef} style={{ display: 'block', width: '100%', height: '100%' }} />
-
-            <div style={{
-                position: 'absolute', inset: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                pointerEvents: 'none',
-            }}>
-                <form
-                    onSubmit={handleLogin}
-                    style={{
-                        pointerEvents: 'all',
-                        background: 'rgba(255,255,255,0.55)',
-                        backdropFilter: 'blur(22px)',
-                        WebkitBackdropFilter: 'blur(22px)',
-                        border: '1px solid rgba(255,255,255,0.75)',
-                        borderRadius: '24px',
-                        padding: '44px 40px',
-                        width: '360px',
-                        boxShadow: '0 12px 48px rgba(80,140,60,0.18), 0 2px 8px rgba(0,0,0,0.08)',
-                    }}
-                >
-                    <div style={{ textAlign: 'center', marginBottom: '28px' }}>
-                        <div style={{
-                            width: 52, height: 52, borderRadius: '16px',
-                            background: 'linear-gradient(135deg, #56ab2f, #a8e063)',
-                            margin: '0 auto 14px',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            fontSize: 26,
-                            boxShadow: '0 4px 16px rgba(86,171,47,0.35)',
-                        }}>🌿</div>
-                        <h2 style={{ color: '#2d5a1b', fontSize: 23, fontWeight: 700, margin: 0, letterSpacing: '-0.3px' }}>
-                            Chào mừng
-                        </h2>
-                        <p style={{ color: '#6a9c4f', fontSize: 13, margin: '6px 0 0' }}>
-                            Đăng nhập để tiếp tục
-                        </p>
-                    </div>
-
-                    <div style={{ marginBottom: 14 }}>
-                        <label style={{ color: '#4a7a35', fontSize: 12, fontWeight: 600, display: 'block', marginBottom: 6 }}>
-                            Email hoặc SĐT
-                        </label>
-                        <input
-                            type="text" value={identifier} onChange={e => setIdentifier(e.target.value)}
-                            placeholder="you@example.com hoặc 0901234567" required
-                            style={{
-                                width: '100%', boxSizing: 'border-box',
-                                background: 'rgba(255,255,255,0.7)',
-                                border: '1.5px solid rgba(86,171,47,0.3)',
-                                borderRadius: 12, padding: '12px 14px',
-                                color: '#2d4a1e', fontSize: 14, outline: 'none',
-                            }}
-                            onFocus={e => (e.target.style.borderColor = '#56ab2f')}
-                            onBlur={e => (e.target.style.borderColor = 'rgba(86,171,47,0.3)')}
-                        />
-                    </div>
-
-                    <div style={{ marginBottom: 22 }}>
-                        <label style={{ color: '#4a7a35', fontSize: 12, fontWeight: 600, display: 'block', marginBottom: 6 }}>
-                            Mật khẩu
-                        </label>
-                        <input
-                            type="password" value={password} onChange={e => setPassword(e.target.value)}
-                            placeholder="••••••••" required
-                            style={{
-                                width: '100%', boxSizing: 'border-box',
-                                background: 'rgba(255,255,255,0.7)',
-                                border: '1.5px solid rgba(86,171,47,0.3)',
-                                borderRadius: 12, padding: '12px 14px',
-                                color: '#2d4a1e', fontSize: 14, outline: 'none',
-                            }}
-                            onFocus={e => (e.target.style.borderColor = '#56ab2f')}
-                            onBlur={e => (e.target.style.borderColor = 'rgba(86,171,47,0.3)')}
-                        />
-                    </div>
-
-                    {error && (
-                        <p style={{
-                            color: '#c0392b', fontSize: 13, textAlign: 'center',
-                            margin: '0 0 14px', background: 'rgba(192,57,43,0.08)',
-                            borderRadius: 8, padding: '8px 12px',
-                        }}>
-                            {error}
-                        </p>
-                    )}
-
-                    <button
-                        type="submit" disabled={loading}
-                        style={{
-                            width: '100%', padding: '13px',
-                            borderRadius: 12, border: 'none',
-                            background: loading ? 'rgba(86,171,47,0.4)' : 'linear-gradient(135deg, #56ab2f, #a8e063)',
-                            color: '#fff', fontSize: 15, fontWeight: 700,
-                            cursor: loading ? 'not-allowed' : 'pointer',
-                            boxShadow: loading ? 'none' : '0 4px 16px rgba(86,171,47,0.4)',
-                            letterSpacing: '0.2px',
-                        }}
-                    >
-                        {loading ? 'Đang đăng nhập...' : 'Đăng nhập →'}
-                    </button>
-
-                    <p style={{ color: '#8ab87a', fontSize: 11, textAlign: 'center', marginTop: 18 }}>
-                        🌾 Đồng cỏ vô tận đang chờ bạn
-                    </p>
-                </form>
-            </div>
-        </div>
+        <canvas
+            ref={canvasRef}
+            style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'block',
+                zIndex: 0,
+            }}
+        />
     )
 }

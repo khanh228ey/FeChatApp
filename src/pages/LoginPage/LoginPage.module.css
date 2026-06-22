@@ -1,0 +1,83 @@
+.container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+.formWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: var(--primary-gradient);
+  margin: 0 auto 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 16px rgba(86, 171, 47, 0.35);
+}
+
+.title {
+  color: var(--text-green-dark);
+  font-size: 23px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.subtitle {
+  color: var(--text-green-light);
+  font-size: 13px;
+  margin: 6px 0 0;
+}
+
+.error {
+  color: var(--error-color);
+  font-size: 13px;
+  text-align: center;
+  margin: 0 0 14px;
+  background: var(--error-bg);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.footerLinkContainer {
+  text-align: center;
+  margin-top: 16px;
+}
+
+.footerLinkText {
+  color: var(--text-green-light);
+  font-size: 13px;
+}
+
+.footerLink {
+  color: var(--text-green-dark);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.footnote {
+  color: var(--text-green-muted);
+  font-size: 11px;
+  text-align: center;
+  margin-top: 18px;
+}
