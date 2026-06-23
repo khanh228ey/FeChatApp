@@ -6,8 +6,8 @@ import styles from './RegisterPage.module.css'
 export default function RegisterPage() {
   const navigate = useNavigate()
   const {
-    identifier,
-    setIdentifier,
+    email,
+    setEmail,
     password,
     setPassword,
     rePassword,
@@ -31,10 +31,11 @@ export default function RegisterPage() {
             </div>
 
             <Input
-              label="Email hoặc Số điện thoại"
-              value={identifier}
-              onChange={setIdentifier}
-              placeholder="you@example.com hoặc 0901234567"
+              label="Email"
+              type="email"
+              value={email}
+              onChange={setEmail}
+              placeholder="you@example.com"
               required
             />
 

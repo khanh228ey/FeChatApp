@@ -8,7 +8,7 @@ import type { ApiError } from '../types/auth.types'
 export function useRegister() {
   const navigate = useNavigate()
   const login = useAuthStore((s) => s.login)
-  const [identifier, setIdentifier] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [rePassword, setRePassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -18,9 +18,14 @@ export function useRegister() {
     e.preventDefault()
     setError('')
 
-    const trimmedIdentifier = identifier.trim()
-    if (!trimmedIdentifier) {
-      setError('Vui lòng nhập Email hoặc Số điện thoại')
+    const trimmedEmail = email.trim()
+    if (!trimmedEmail) {
+      setError('Vui lòng nhập Email')
+      return
+    }
+
+    if (!trimmedEmail.includes('@')) {
+      setError('Email không hợp lệ')
       return
     }
 
@@ -36,12 +41,8 @@ export function useRegister() {
 
     setLoading(true)
 
-    const isEmail = trimmedIdentifier.includes('@')
-    const email = isEmail ? trimmedIdentifier : undefined
-    const phone = isEmail ? undefined : trimmedIdentifier
-
     try {
-      const result = await registerService({ email, phone, password })
+      const result = await registerService({ email: trimmedEmail, password })
       login(result.token, result.user)
       navigate('/hello')
     } catch (err) {
@@ -56,8 +57,8 @@ export function useRegister() {
   }
 
   return {
-    identifier,
-    setIdentifier,
+    email,
+    setEmail,
     password,
     setPassword,
     rePassword,
