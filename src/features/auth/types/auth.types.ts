@@ -2,6 +2,7 @@ export interface User {
   id: string
   email?: string
   phone?: string
+  displayName?: string   // Tên hiển thị (API trả về, hoặc fallback email/phone)
 }
 
 export interface LoginRequest {

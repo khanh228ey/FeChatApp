@@ -18,7 +18,7 @@ export function GuestRoute({ children }: { children: ReactNode }) {
   const isAuthenticated = useAuthStore((s) => s.isAuthenticated)
 
   if (isAuthenticated) {
-    return <Navigate to="/hello" replace />
+    return <Navigate to="/chat" replace />
   }
 
   return children

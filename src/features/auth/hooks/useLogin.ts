@@ -21,7 +21,7 @@ export function useLogin() {
     try {
       const result = await loginService({ identifier, password })
       login(result.token, result.user)
-      navigate('/hello')
+      navigate('/chat')
     } catch (err) {
       if (isAxiosError<ApiError>(err)) {
         setError(err.response?.data?.error ?? 'Đăng nhập thất bại')
