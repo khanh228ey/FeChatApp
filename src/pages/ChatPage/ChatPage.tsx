@@ -1,7 +1,6 @@
-import styles from './ChatPage.module.css'
-import { ChatSidebar } from '../../features/chat/components/ChatSidebar/ChatSidebar'
-import { ChatWindow } from '../../features/chat/components/ChatWindow/ChatWindow'
-import { useChat } from '../../features/chat/hooks/useChat'
+import { ChatSidebar } from '@/features/chat/components/ChatSidebar/ChatSidebar'
+import { ChatWindow } from '@/features/chat/components/ChatWindow/ChatWindow'
+import { useChat } from '@/features/chat/hooks/useChat'
 
 export default function ChatPage() {
   const {
@@ -18,7 +17,7 @@ export default function ChatPage() {
   } = useChat()
 
   return (
-    <div className={styles.layout}>
+    <div className="flex w-screen h-screen overflow-hidden bg-background">
       <ChatSidebar
         conversations={conversations}
         activeConversationId={activeConversationId}

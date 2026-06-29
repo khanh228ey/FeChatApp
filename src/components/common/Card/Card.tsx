@@ -1,28 +1,62 @@
+import {
+  Card as ShadCard,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 import type { ReactNode } from 'react'
 
 interface CardProps {
   children: ReactNode
+  className?: string
+  // Legacy compat
   style?: React.CSSProperties
+  // Extended props
+  title?: string
+  description?: string
+  footer?: ReactNode
+  glass?: boolean  // glassmorphism style (giống card login cũ)
 }
 
-export default function Card({ children, style }: CardProps) {
+/**
+ * Card common — wrapper Shadcn Card.
+ * glass=true → style glassmorphism giống card login cũ.
+ */
+export default function Card({
+  children,
+  className,
+  style,
+  title,
+  description,
+  footer,
+  glass = true,
+}: CardProps) {
   return (
-    <div
-      style={{
-        pointerEvents: 'all',
-        background: 'rgba(255,255,255,0.55)',
-        backdropFilter: 'blur(22px)',
-        WebkitBackdropFilter: 'blur(22px)',
-        border: '1px solid rgba(255,255,255,0.75)',
-        borderRadius: '24px',
-        padding: '40px 40px',
-        width: '360px',
-        boxShadow: '0 12px 48px rgba(80,140,60,0.18), 0 2px 8px rgba(0,0,0,0.08)',
-        boxSizing: 'border-box',
-        ...style,
-      }}
+    <ShadCard
+      className={cn(
+        'border shadow-lg',
+        glass && [
+          'bg-white/55 backdrop-blur-2xl',
+          'border-white/70',
+          'shadow-[0_12px_48px_rgba(80,140,60,0.18),0_2px_8px_rgba(0,0,0,0.08)]',
+        ],
+        className
+      )}
+      style={style}
     >
-      {children}
-    </div>
+      {(title || description) && (
+        <CardHeader className="pb-2">
+          {title && <CardTitle className="text-xl font-bold">{title}</CardTitle>}
+          {description && <CardDescription>{description}</CardDescription>}
+        </CardHeader>
+      )}
+      <CardContent className={cn(!title && !description && 'pt-6')}>
+        {children}
+      </CardContent>
+      {footer && <CardFooter>{footer}</CardFooter>}
+    </ShadCard>
   )
 }
