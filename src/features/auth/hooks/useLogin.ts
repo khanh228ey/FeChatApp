@@ -20,7 +20,7 @@ export function useLogin() {
 
     try {
       const result = await loginService({ identifier, password })
-      login(result.token, result.user)
+      login(result.access_token, result.user)
       navigate('/chat')
     } catch (err) {
       if (isAxiosError<ApiError>(err)) {

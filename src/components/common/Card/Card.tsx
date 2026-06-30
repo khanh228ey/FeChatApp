@@ -37,7 +37,7 @@ export default function Card({
   return (
     <ShadCard
       className={cn(
-        'border shadow-lg',
+        'border shadow-lg pointer-events-auto',
         glass && [
           'bg-white/55 backdrop-blur-2xl',
           'border-white/70',
@@ -53,7 +53,7 @@ export default function Card({
           {description && <CardDescription>{description}</CardDescription>}
         </CardHeader>
       )}
-      <CardContent className={cn(!title && !description && 'pt-6')}>
+      <CardContent className={cn(!title && !description && 'pt-6', 'px-5 sm:px-6')}>
         {children}
       </CardContent>
       {footer && <CardFooter>{footer}</CardFooter>}

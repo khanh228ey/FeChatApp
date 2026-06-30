@@ -1,4 +1,4 @@
-import { Phone, Video, Info } from 'lucide-react'
+import { Phone, Video, Info, ChevronLeft } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Separator } from '@/components/ui/separator'
@@ -164,24 +164,49 @@ interface ChatWindowProps {
   inputValue: string
   onInputChange: (val: string) => void
   onSend: () => void
+  onBack?: () => void
 }
 
-export function ChatWindow({ conversation, messages, inputValue, onInputChange, onSend }: ChatWindowProps) {
+export function ChatWindow({ conversation, messages, inputValue, onInputChange, onSend, onBack }: ChatWindowProps) {
   const bottomRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  if (!conversation) return <div className="flex-1 flex flex-col bg-background"><EmptyWindow /></div>
+  if (!conversation) return (
+    <div className="flex-1 flex flex-col bg-background">
+      {/* Nút back mobile khi chưa chọn conv */}
+      {onBack && (
+        <div className="md:hidden flex items-center px-3 pt-3">
+          <Button variant="ghost" size="icon" className="h-8 w-8" onClick={onBack}>
+            <ChevronLeft className="h-5 w-5" />
+          </Button>
+        </div>
+      )}
+      <EmptyWindow />
+    </div>
+  )
 
   const isOnline = conversation.type === 'direct' ? (conversation.participants[0]?.isOnline ?? false) : false
 
   return (
     <div className="flex-1 flex flex-col bg-background overflow-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between px-5 py-3 border-b bg-card shrink-0">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between px-3 md:px-5 py-3 border-b bg-card shrink-0">
+        <div className="flex items-center gap-2 md:gap-3">
+          {/* Nút back — chỉ hiện trên mobile */}
+          {onBack && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="md:hidden h-8 w-8 shrink-0 -ml-1 text-muted-foreground hover:text-foreground"
+              onClick={onBack}
+              aria-label="Quay lại"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+          )}
           <MiniAvatar name={conversation.name} />
           <div>
             <h2 className="font-bold text-sm leading-tight">{conversation.name}</h2>

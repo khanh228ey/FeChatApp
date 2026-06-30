@@ -43,7 +43,7 @@ export function useRegister() {
 
     try {
       const result = await registerService({ email: trimmedEmail, password })
-      login(result.token, result.user)
+      login(result.access_token, result.user)
       navigate('/hello')
     } catch (err) {
       if (isAxiosError<ApiError>(err)) {

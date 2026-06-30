@@ -16,7 +16,7 @@ export interface RegisterRequest {
 }
 
 export interface AuthResponse {
-  token: string
+  access_token: string   // Backend trả về "access_token"
   user: User
 }
 
