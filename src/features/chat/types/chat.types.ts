@@ -46,3 +46,15 @@ export interface ChatUIState {
   searchQuery: string
   isSidebarOpen: boolean
 }
+
+// ==================== WEBSOCKET ====================
+
+export interface WsMessage {
+  type: 'chat_message' | 'error'
+  id?: string
+  conversation_id?: string
+  sender_id?: string
+  content?: string
+  created_at?: string
+  error?: string
+}

@@ -84,10 +84,13 @@ function ConvItem({ conv, isActive, onClick }: { conv: Conversation; isActive: b
 }
 
 // ── Friend row (accepted) ────────────────────────────────────────
-function FriendItem({ friend }: { friend: FriendResponse }) {
+function FriendItem({ friend, onClick }: { friend: FriendResponse; onClick: () => void }) {
   const hue = stringToHue(friend.email)
   return (
-    <div className="flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-muted/60 transition-colors">
+    <button
+      onClick={onClick}
+      className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 transition-colors text-left group"
+    >
       <Avatar className="h-10 w-10 text-sm shrink-0">
         <AvatarFallback
           className="font-semibold text-white"
@@ -97,10 +100,11 @@ function FriendItem({ friend }: { friend: FriendResponse }) {
         </AvatarFallback>
       </Avatar>
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-semibold truncate text-foreground">{friend.email}</p>
+        <p className="text-sm font-semibold truncate text-foreground group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors">{friend.email}</p>
         <p className="text-xs text-emerald-500 font-medium">● Bạn bè</p>
       </div>
-    </div>
+      <span className="text-[11px] text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0 font-medium">Nhắn tin →</span>
+    </button>
   )
 }
 
@@ -190,6 +194,7 @@ interface ChatSidebarProps {
   searchQuery: string
   onSearchChange: (q: string) => void
   onSelectConversation: (id: string) => void
+  onOpenChatWithFriend: (friend: FriendResponse) => void
 }
 
 export function ChatSidebar({
@@ -198,6 +203,7 @@ export function ChatSidebar({
   searchQuery,
   onSearchChange,
   onSelectConversation,
+  onOpenChatWithFriend,
 }: ChatSidebarProps) {
   const { user, logout } = useAuthStore()
   const displayName = getUserDisplayName(user)
@@ -401,7 +407,14 @@ export function ChatSidebar({
                   ) : (
                     <div className="flex flex-col gap-0.5">
                       {friends.map((friend) => (
-                        <FriendItem key={friend.id} friend={friend} />
+                        <FriendItem
+                          key={friend.id}
+                          friend={friend}
+                          onClick={() => {
+                            onOpenChatWithFriend(friend)
+                            setActiveTab('messages')
+                          }}
+                        />
                       ))}
                     </div>
                   )}

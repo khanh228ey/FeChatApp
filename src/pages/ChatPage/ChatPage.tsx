@@ -29,6 +29,7 @@ export default function ChatPage() {
     currentInput,
     setCurrentInput,
     sendMessage,
+    openChatWithFriend,
   } = useChat()
 
   const isMobile = useIsMobile()
@@ -57,6 +58,10 @@ export default function ChatPage() {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onSelectConversation={handleSelectConversation}
+            onOpenChatWithFriend={(friend) => {
+              openChatWithFriend(friend)
+              if (isMobile) setMobilePanel('chat')
+            }}
           />
         </div>
 
@@ -87,6 +92,10 @@ export default function ChatPage() {
             searchQuery={searchQuery}
             onSearchChange={setSearchQuery}
             onSelectConversation={handleSelectConversation}
+            onOpenChatWithFriend={(friend) => {
+              openChatWithFriend(friend)
+              setMobilePanel('chat')
+            }}
           />
         </div>
       ) : (
